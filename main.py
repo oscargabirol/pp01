@@ -1,40 +1,42 @@
+from PyQt6.QtCore import QSize
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QVBoxLayout, QWidget
 import sys
 
-from PyQt6.QtCore import QSize
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
 
-
-# Subclass QMainWindow to customize your application's main window
-class MainWindow(QMainWindow):
+class VentanaPrincipal(QMainWindow):
     def __init__(self):
+        # Llamo al constructor de la clase padre.
         super().__init__()
 
-        self.button_is_checked = True
-        self.setWindowTitle("My App")
-
-        self.button = QPushButton("Press Me!")
-        self.button.setCheckable(True)
-        self.button.clicked.connect(self.the_button_was_clicked)
-        self.button.clicked.connect(self.the_button_was_toggled)
-        self.button.setChecked(self.button_is_checked)
-
+        # Pongo título a la ventana y le doy tamaño.
+        self.setWindowTitle("IBN Gabirol")
         self.setFixedSize(QSize(400, 300))
 
-        # Set the central widget of the Window.
-        self.setCentralWidget(self.button)
+        # Instancio un objeto, "texto_salida", que muestra texto.
+        self.texto_salida = QLabel()
 
-    def the_button_was_clicked(self):
-        print("Clicked!")
+        # Instancio un objeto, "texto_entrada", que almacena texto tecleado.
+        self.texto_entrada = QLineEdit()
+        self.texto_entrada.textChanged.connect(self.texto_salida.setText)
 
-    def the_button_was_toggled(self):
-        self.button_is_checked = self.button.isChecked()
+        # Instancio un objeto, "layout", que alberga a los dos objetos anteriores.
+        layout = QVBoxLayout()
+        layout.addWidget(self.texto_entrada)
+        layout.addWidget(self.texto_salida)
+        
+        # Instancio un objeto, "contenedor", que contiene al objeto "layout".
+        contenedor = QWidget()
+        contenedor.setLayout(layout)
 
-        print(self.button_is_checked)
+        # Pongo el contenedor como widget central de nuestra ventana.
+        self.setCentralWidget(contenedor)
 
+# Creo un objeto aplicación.
+aplicacion = QApplication(sys.argv)
 
-app = QApplication(sys.argv)
+# Creo un objeto ventana y lo muestro.
+ventana = VentanaPrincipal()
+ventana.show()
 
-window = MainWindow()
-window.show()
-
-app.exec()
+# Ejecuto la aplicación, esperando eventos.
+aplicacion.exec()
