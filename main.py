@@ -1,42 +1,69 @@
-from PyQt6.QtCore import QSize
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QVBoxLayout, QWidget
 import sys
 
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QVBoxLayout  # <2>
+from PyQt6.QtWidgets import QWidget  # <1>
+from PyQt6.QtWidgets import (
+    QApplication,
+    QCheckBox,
+    QComboBox,
+    QDateEdit,
+    QDateTimeEdit,
+    QDial,
+    QDoubleSpinBox,
+    QFontComboBox,
+    QLabel,
+    QLCDNumber,
+    QLineEdit,
+    QMainWindow,
+    QProgressBar,
+    QPushButton,
+    QRadioButton,
+    QSlider,
+    QSpinBox,
+    QTimeEdit,
+)
 
+
+# Subclase de QMainWindow para personalizar la ventana principal de mi aplicación.
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
-        # Llamo al constructor de la clase padre.
         super().__init__()
 
-        # Pongo título a la ventana y le doy tamaño.
-        self.setWindowTitle("IBN Gabirol")
-        self.setFixedSize(QSize(400, 300))
+        self.setWindowTitle("Montón de Widgets")
 
-        # Instancio un objeto, "texto_salida", que muestra texto.
-        self.texto_salida = QLabel()
-
-        # Instancio un objeto, "texto_entrada", que almacena texto tecleado.
-        self.texto_entrada = QLineEdit()
-        self.texto_entrada.textChanged.connect(self.texto_salida.setText)
-
-        # Instancio un objeto, "layout", que alberga a los dos objetos anteriores.
         layout = QVBoxLayout()
-        layout.addWidget(self.texto_entrada)
-        layout.addWidget(self.texto_salida)
-        
-        # Instancio un objeto, "contenedor", que contiene al objeto "layout".
-        contenedor = QWidget()
-        contenedor.setLayout(layout)
+        widgets = [
+            QCheckBox,
+            QComboBox,
+            QDateEdit,
+            QDateTimeEdit,
+            QDial,
+            QDoubleSpinBox,
+            QFontComboBox,
+            QLCDNumber,
+            QLabel,
+            QLineEdit,
+            QProgressBar,
+            QPushButton,
+            QRadioButton,
+            QSlider,
+            QSpinBox,
+            QTimeEdit,
+        ]
 
-        # Pongo el contenedor como widget central de nuestra ventana.
-        self.setCentralWidget(contenedor)
+        for w in widgets:
+            layout.addWidget(w())
 
-# Creo un objeto aplicación.
-aplicacion = QApplication(sys.argv)
+        widget = QWidget()
+        widget.setLayout(layout)
 
-# Creo un objeto ventana y lo muestro.
-ventana = VentanaPrincipal()
-ventana.show()
+        # Pone el widget central de la ventana. El widget se expanda hasta ocupar por completo el espacio de la ventana.
+        self.setCentralWidget(widget)
 
-# Ejecuto la aplicación, esperando eventos.
-aplicacion.exec()
+
+app = QApplication(sys.argv)
+window = VentanaPrincipal()
+window.show()
+
+app.exec()
