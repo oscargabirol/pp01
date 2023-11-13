@@ -1,8 +1,8 @@
 import sys
 
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QVBoxLayout  # <2>
-from PyQt6.QtWidgets import QWidget  # <1>
+from PyQt6.QtWidgets import QVBoxLayout
+from PyQt6.QtWidgets import QWidget
 from PyQt6.QtWidgets import (
     QApplication,
     QCheckBox,
